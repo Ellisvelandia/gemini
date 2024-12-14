@@ -58,31 +58,43 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
 // main().catch(console.error);
 
 
-async function main() {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// async function main() {
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const chat = await model.startChat({
-        history: [
-            {
-                role: "user",
-                parts: [{ text: "Hello, I have 2 dogs in my house?" }],
-            },
-            {
-                role: "model",
-                parts: [{ text: "Great to meet you, what would like to know?" }],
-            },
-        ],
-        generationConfig: {
-            maxOutputTokens: 100,
-        },
-    });
+//     const chat = await model.startChat({
+//         history: [
+//             {
+//                 role: "user",
+//                 parts: [{ text: "Hello, I have 2 dogs in my house?" }],
+//             },
+//             {
+//                 role: "model",
+//                 parts: [{ text: "Great to meet you, what would like to know?" }],
+//             },
+//         ],
+//         generationConfig: {
+//             maxOutputTokens: 100,
+//         },
+//     });
 
-    const msg = "How many paws are in my house?"
+//     const msg = "How many paws are in my house?"
     
-    const result = await chat.sendMessage(msg);
-    const response = await result.response;
-    const text = response.text();
-    console.log(text);
-}
+//     const result = await chat.sendMessage(msg);
+//     const response = await result.response;
+//     const text = response.text();
+//     console.log(text);
+// }
 
-main()
+// main()
+
+// async function main() { 
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//     const text = "The quick brown fox jumps over the lazy dog."
+//     const result = await model.generateContent(text);
+//     const response = await result.response;
+//     const text2 = response.text();
+//     console.log(text2);
+// }
+
+// main()
