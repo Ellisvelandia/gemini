@@ -11,38 +11,38 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
 // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 // const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
-function fileToGenerativePart(path, mimeType) {
-  return {
-    inlineData: {
-      data: fs.readFileSync(path).toString("base64"),
-      mimeType: mimeType,
-    },
-  };
-}
+// function fileToGenerativePart(path, mimeType) {
+//   return {
+//     inlineData: {
+//       data: fs.readFileSync(path).toString("base64"),
+//       mimeType: mimeType,
+//     },
+//   };
+// }
 
-async function run() {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// async function run() {
+//   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = "What's different between these pictures?";
-  const imageParts = [
-    fileToGenerativePart("cat.jpeg", "image/jpeg"),
-    fileToGenerativePart("pikachu.jpg", "image/jpeg"),
-  ];
+//   const prompt = "What's different between these pictures?";
+//   const imageParts = [
+//     fileToGenerativePart("cat.jpeg", "image/jpeg"),
+//     fileToGenerativePart("pikachu.jpg", "image/jpeg"),
+//   ];
 
-  const result = await model.generateContent({
-    contents: [
-      {
-        parts: [{ text: prompt }, ...imageParts],
-      },
-    ],
-  });
+//   const result = await model.generateContent({
+//     contents: [
+//       {
+//         parts: [{ text: prompt }, ...imageParts],
+//       },
+//     ],
+//   });
 
-  const response = await result.response;
-  const text = response.text();
-  console.log(text);
-}
+//   const response = await result.response;
+//   const text = response.text();
+//   console.log(text);
+// }
 
-run();
+// run();
 
 // // Main async function to interact with the AI model
 // async function main() {
@@ -56,3 +56,33 @@ run();
 
 // // Execute the main function and catch any errors
 // main().catch(console.error);
+
+
+async function main() {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const chat = await model.startChat({
+        history: [
+            {
+                role: "user",
+                parts: [{ text: "Hello, I have 2 dogs in my house?" }],
+            },
+            {
+                role: "model",
+                parts: [{ text: "Great to meet you, what would like to know?" }],
+            },
+        ],
+        generationConfig: {
+            maxOutputTokens: 100,
+        },
+    });
+
+    const msg = "How many paws are in my house?"
+    
+    const result = await chat.sendMessage(msg);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+}
+
+main()
